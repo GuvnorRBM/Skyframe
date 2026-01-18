@@ -80,57 +80,124 @@
       padding: 14px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .row{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    label{
-      font-size: 12px;
-      color: var(--muted);
+    /* Progress */
+    .progressRow{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
+      margin-bottom: 10px;
+    }
+    .progressText{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .bar{
+      flex: 1 1 auto;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width: 0%;
+      background: rgba(125,211,252,.35);
+      border-right: 1px solid rgba(125,211,252,.55);
+      transition: width .18s ease;
     }
 
-    select, button, input[type="text"]{
-      width:100%;
+    /* Step */
+    .step{
+      display:none;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,.18);
+      margin-bottom: 10px;
+    }
+    .step.active{ display:block; }
+
+    .stepTitle{
+      font-size: 14px;
+      margin: 0 0 6px;
+      letter-spacing: .2px;
+    }
+    .stepHint{
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 10px;
+      line-height: 1.35;
+    }
+
+    /* Big option buttons */
+    .options{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .optBtn{
       appearance:none;
-      border-radius: 14px;
+      -webkit-tap-highlight-color: transparent;
+      width:100%;
+      text-align:left;
+      border-radius: 16px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.06);
       color: var(--fg);
       padding: 12px 12px;
-      font-size: 15px;
-      outline: none;
+      cursor:pointer;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      min-height: 54px;
     }
-
-    select:disabled{
-      opacity: .55;
+    .optBtn:active{ transform: translateY(1px); }
+    .optBtn .t{
+      display:flex;
+      flex-direction:column;
+      gap: 3px;
     }
-
-    .hint{
+    .optBtn .t b{
+      font-size: 14px;
+      letter-spacing: .1px;
+    }
+    .optBtn .t span{
       font-size: 12px;
       color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.35;
+      line-height: 1.25;
+    }
+    .optBtn .pill{
+      flex: 0 0 auto;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      align-self:center;
     }
 
+    .optBtn.selected{
+      border-color: rgba(125,211,252,.35);
+      background: rgba(125,211,252,.10);
+    }
+    .optBtn.selected .pill{
+      border-color: rgba(134,239,172,.35);
+      background: rgba(134,239,172,.10);
+      color: var(--fg);
+    }
+
+    /* Toggles */
     .toggles{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 10px;
     }
-
     .toggle{
       background: var(--card2);
       border: 1px solid var(--border);
@@ -140,7 +207,7 @@
       align-items:center;
       justify-content:space-between;
       gap: 10px;
-      min-height: 48px;
+      min-height: 52px;
     }
     .toggle .t-title{
       display:flex;
@@ -183,38 +250,45 @@
       background: rgba(134,239,172,.95);
     }
 
-    .actions{
+    /* Nav */
+    .nav{
       display:flex;
       gap: 10px;
       margin-top: 12px;
     }
-    .btn{
+    button{
+      width:100%;
+      appearance:none;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--fg);
+      padding: 12px 12px;
+      font-size: 15px;
+      outline: none;
       cursor:pointer;
+      font-weight: 650;
+    }
+    button:disabled{ opacity:.55; cursor:not-allowed; }
+    .primary{
       border: 1px solid rgba(125,211,252,.30);
       background: rgba(125,211,252,.14);
-      font-weight: 600;
     }
-    .btn.secondary{
-      border-color: var(--border);
-      background: rgba(255,255,255,0.06);
-      font-weight: 600;
-    }
-    .btn:active{ transform: translateY(1px); }
 
+    /* Result */
     .result{
+      display:none;
       margin-top: 12px;
       padding: 14px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
       background: rgba(0,0,0,.22);
     }
-
     .result h2{
       margin:0 0 10px;
       font-size: 15px;
       letter-spacing: .2px;
     }
-
     .chips{
       display:flex;
       flex-wrap: wrap;
@@ -267,14 +341,13 @@
     .small{
       font-size: 12px;
       color: var(--muted);
-      margin-top: 8px;
+      margin-top: 10px;
       line-height: 1.35;
     }
 
     @media (min-width: 720px){
       h1{ font-size: 20px; }
-      .grid{ grid-template-columns: 1fr 1fr; }
-      .row.full{ grid-column: 1 / -1; }
+      .options{ grid-template-columns: 1fr 1fr; }
       .kv{ grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -291,117 +364,101 @@
       </div>
       <div>
         <h1>Drone Camera Settings, Field Cheat Tool</h1>
-        <p class="sub">Pick the drone, lighting and what you’re doing, it’ll spit out sensible starting settings (video and photo) plus an ND suggestion.</p>
+        <p class="sub">Wizard mode, big buttons, phone friendly. Answer a few questions, get recommended starting settings and an ND suggestion.</p>
       </div>
     </header>
 
     <div class="card">
-      <div class="grid">
-        <div class="row">
-          <label for="drone">Drone</label>
-          <select id="drone">
-            <option value="">Select…</option>
-            <option value="mini1">Mavic Mini Mk1</option>
-            <option value="neo2">Neo Mk2</option>
-            <option value="mini3p">Mini 3 Pro</option>
-            <option value="mini5p">Mini 5 Pro</option>
-            <option value="m4dt">Matrice 4DT</option>
-          </select>
-          <div id="droneHint" class="hint"></div>
-        </div>
+      <div class="progressRow">
+        <div class="progressText" id="progressText">Step 1 of 4</div>
+        <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
+      </div>
 
-        <div class="row">
-          <label for="mode">Output</label>
-          <select id="mode" disabled>
-            <option value="">Select…</option>
-            <option value="video">Video</option>
-            <option value="photo">Photo</option>
-            <option value="both">Both</option>
-          </select>
-          <div class="hint">If you pick “Both”, you’ll get a video preset and a photo preset.</div>
-        </div>
+      <!-- STEP 1: DRONE -->
+      <section class="step active" id="step1">
+        <h3 class="stepTitle">1) Which drone are you flying?</h3>
+        <p class="stepHint" id="droneHint">Pick the aircraft so we can tailor the advice.</p>
+        <div class="options" id="droneOptions"></div>
+      </section>
 
-        <div class="row">
-          <label for="lighting">Lighting</label>
-          <select id="lighting" disabled>
-            <option value="">Select…</option>
-            <option value="bright">Bright sun / snow glare</option>
-            <option value="mixed">Sun + clouds (changeable)</option>
-            <option value="overcast">Overcast</option>
-            <option value="golden">Golden hour</option>
-            <option value="dusk">Dusk / low light</option>
-            <option value="night">Night (street lights etc.)</option>
-          </select>
-        </div>
+      <!-- STEP 2: OUTPUT -->
+      <section class="step" id="step2">
+        <h3 class="stepTitle">2) What are you shooting?</h3>
+        <p class="stepHint">Choose video, photo, or both.</p>
+        <div class="options" id="modeOptions"></div>
+      </section>
 
-        <div class="row">
-          <label for="mission">Mission style</label>
-          <select id="mission" disabled>
-            <option value="">Select…</option>
-            <option value="cinematic">Cinematic (slow, smooth)</option>
-            <option value="trackingSlow">Tracking subject (walking, gentle follow)</option>
-            <option value="trackingFast">Tracking subject (cars, fast movement)</option>
-            <option value="actionCrisp">Action crisp (short shutter, less blur)</option>
-            <option value="landscapePhoto">Landscape / stills</option>
-            <option value="nightVideo">Night video (accept limitations)</option>
-          </select>
-        </div>
+      <!-- STEP 3: LIGHTING -->
+      <section class="step" id="step3">
+        <h3 class="stepTitle">3) What is the lighting like?</h3>
+        <p class="stepHint">This mainly influences ISO targets and ND choice.</p>
+        <div class="options" id="lightingOptions"></div>
+      </section>
 
-        <div class="row full">
-          <div class="toggles">
-            <div class="toggle" title="PAL prefers 25/50 fps, NTSC prefers 30/60 fps.">
-              <div class="t-title">
-                <span>PAL mode</span>
-                <span>25/50 base fps</span>
-              </div>
-              <label class="switch" aria-label="PAL mode">
-                <input id="palToggle" type="checkbox" checked />
-                <span class="knob"></span>
-              </label>
+      <!-- STEP 4: MISSION -->
+      <section class="step" id="step4">
+        <h3 class="stepTitle">4) What style of mission is it?</h3>
+        <p class="stepHint">This is where shutter and frame rate decisions happen.</p>
+        <div class="options" id="missionOptions"></div>
+
+        <div class="toggles">
+          <div class="toggle" title="PAL prefers 25/50 fps, NTSC prefers 30/60 fps.">
+            <div class="t-title">
+              <span>PAL mode</span>
+              <span>25/50 base fps</span>
             </div>
+            <label class="switch" aria-label="PAL mode">
+              <input id="palToggle" type="checkbox" checked />
+              <span class="knob"></span>
+            </label>
+          </div>
 
-            <div class="toggle" title="Lock white balance for video to avoid colour shifts mid-clip.">
-              <div class="t-title">
-                <span>Lock white balance</span>
-                <span>recommended for video</span>
-              </div>
-              <label class="switch" aria-label="Lock white balance">
-                <input id="wbToggle" type="checkbox" checked />
-                <span class="knob"></span>
-              </label>
+          <div class="toggle" title="Lock white balance for video to avoid colour shifts mid-clip.">
+            <div class="t-title">
+              <span>Lock white balance</span>
+              <span>recommended for video</span>
             </div>
+            <label class="switch" aria-label="Lock white balance">
+              <input id="wbToggle" type="checkbox" checked />
+              <span class="knob"></span>
+            </label>
+          </div>
 
-            <div class="toggle" title="Use D-Log M / D-Cinelike if the drone supports it, otherwise normal.">
-              <div class="t-title">
-                <span>Use flat profile</span>
-                <span>if available</span>
-              </div>
-              <label class="switch" aria-label="Use flat profile">
-                <input id="flatToggle" type="checkbox" checked />
-                <span class="knob"></span>
-              </label>
+          <div class="toggle" title="Use D-Log M or D-Cinelike if the drone supports it, otherwise normal.">
+            <div class="t-title">
+              <span>Use flat profile</span>
+              <span>if available</span>
             </div>
+            <label class="switch" aria-label="Use flat profile">
+              <input id="flatToggle" type="checkbox" checked />
+              <span class="knob"></span>
+            </label>
+          </div>
 
-            <div class="toggle" title="If on, we will favour keeping ISO down and suggest ND more aggressively for video.">
-              <div class="t-title">
-                <span>Prioritise low ISO</span>
-                <span>cleaner image</span>
-              </div>
-              <label class="switch" aria-label="Prioritise low ISO">
-                <input id="isoToggle" type="checkbox" checked />
-                <span class="knob"></span>
-              </label>
+          <div class="toggle" title="If on, we favour keeping ISO down and suggest ND more aggressively for video.">
+            <div class="t-title">
+              <span>Prioritise low ISO</span>
+              <span>cleaner image</span>
             </div>
+            <label class="switch" aria-label="Prioritise low ISO">
+              <input id="isoToggle" type="checkbox" checked />
+              <span class="knob"></span>
+            </label>
           </div>
         </div>
+      </section>
+
+      <div class="nav">
+        <button id="backBtn" type="button" disabled>Back</button>
+        <button id="nextBtn" class="primary" type="button" disabled>Next</button>
       </div>
 
-      <div class="actions">
-        <button id="resetBtn" class="btn secondary" type="button">Reset</button>
-        <button id="copyBtn" class="btn" type="button" disabled>Copy result</button>
+      <div class="nav" style="margin-top:10px;">
+        <button id="resetBtn" type="button">Reset</button>
+        <button id="copyBtn" class="primary" type="button" disabled>Copy result</button>
       </div>
 
-      <div id="result" class="result" style="display:none;">
+      <div id="result" class="result">
         <h2>Recommended starting settings</h2>
         <div id="chips" class="chips"></div>
         <div class="kv" id="kv"></div>
@@ -410,15 +467,14 @@
       </div>
 
       <div class="small">
-        Notes: This is a “get it right quickly” tool, not a religion. If you want crisp action, break the 180° shutter rule on purpose.
+        This is a “get it right quickly” tool. Use it as a starting point, do a 3-second test clip, then adjust.
       </div>
     </div>
   </div>
 
   <script>
     // ------------------------------------------------------------
-    // Drone spec notes (from DJI official support/spec pages where possible)
-    // Keep these as "guidance", not gospel.
+    // Drone spec notes (guidance)
     // ------------------------------------------------------------
     const DRONES = {
       mini1: {
@@ -429,87 +485,140 @@
         maxVideo: "2.7K 25/30, 1080p up to 60",
         nd: "Aftermarket only",
         notes: "Great for daylight, keep ISO low. 2.7K is your quality ceiling.",
-        photoRaw: "No RAW (JPEG only on Mk1 in DJI Fly)",
-        wbTip: "Lock WB for video to avoid pulsing colour."
+        photoRaw: "No RAW (JPEG only on Mk1 in DJI Fly)"
       },
       neo2: {
         name: "Neo Mk2",
         sensor: "1/2\" CMOS, 12MP",
         aperture: "f/2.2 (fixed)",
-        log: "Unknown/limited (treat as normal profile)",
+        log: "Limited (treat as normal profile unless you know otherwise)",
         maxVideo: "4K up to 60",
         nd: "Aftermarket available",
         notes: "Small drone, small sensor, it’s a daylight/social tool. Don’t chase miracles at night.",
-        photoRaw: "Likely JPEG (check your app options)",
-        wbTip: "Lock WB if you can, Neo-style cameras can drift on Auto."
+        photoRaw: "Varies (check app options)"
       },
       mini3p: {
         name: "Mini 3 Pro",
         sensor: "1/1.3\" CMOS",
         aperture: "f/1.7 (fixed)",
-        log: "D-Cinelike (yes), D-Log (no)",
+        log: "D-Cinelike (yes)",
         maxVideo: "4K up to 60",
         nd: "Aftermarket / third-party",
-        notes: "Very capable. f/1.7 means you’ll want ND fast in daylight if using 180° shutter.",
-        photoRaw: "RAW supported (DNG)",
-        wbTip: "Lock WB for clean grading, especially in D-Cinelike."
+        notes: "Very capable. f/1.7 means you’ll want ND quickly in daylight if using the 180° shutter rule.",
+        photoRaw: "RAW supported (DNG)"
       },
       mini5p: {
         name: "Mini 5 Pro",
         sensor: "1\" CMOS, 50MP",
         aperture: "f/1.8 (fixed)",
-        log: "D-Log M / HLG (per DJI specs)",
-        maxVideo: "Up to 4K (high fps supported)",
-        nd: "DJI Fly More ND kit (assumed available)",
+        log: "D-Log M / HLG (model dependent)",
+        maxVideo: "4K (high fps supported)",
+        nd: "DJI Fly More ND kit available",
         notes: "Big sensor for a mini, still benefits from ND to keep motion natural.",
-        photoRaw: "RAW supported",
-        wbTip: "Lock WB, shoot flat if you’ll grade."
+        photoRaw: "RAW supported"
       },
       m4dt: {
         name: "Matrice 4DT",
-        sensor: "Multi-camera payload (wide + tele variants)",
-        aperture: "Depends on camera (some very wide apertures)",
+        sensor: "Multi-camera payload",
+        aperture: "Depends on camera",
         log: "Enterprise profiles vary",
         maxVideo: "Depends on camera",
-        nd: "Typically no consumer ND workflow, expose carefully",
-        notes: "Treat as an ops platform. For ‘pretty’ footage, keep it conservative and stable.",
-        photoRaw: "Depends on capture mode",
-        wbTip: "Lock WB if you’re producing client-facing video clips."
+        nd: "Not a typical consumer ND workflow",
+        notes: "Treat as an ops platform. For nice clips, keep it stable and conservative.",
+        photoRaw: "Depends on capture mode"
       }
     };
 
     // ------------------------------------------------------------
-    // UI elements
+    // Options for steps (big buttons)
     // ------------------------------------------------------------
-    const elDrone = document.getElementById("drone");
-    const elMode = document.getElementById("mode");
-    const elLighting = document.getElementById("lighting");
-    const elMission = document.getElementById("mission");
-    const elDroneHint = document.getElementById("droneHint");
+    const OPTIONS = {
+      drone: [
+        { value:"mini1", title:"Mavic Mini Mk1", desc:"Lightweight, daylight friendly.", pill:"Mini Mk1" },
+        { value:"neo2",  title:"Neo Mk2",        desc:"Compact, quick shots, limited low light.", pill:"Neo" },
+        { value:"mini3p",title:"Mini 3 Pro",     desc:"Very capable, f/1.7, loves ND in daylight.", pill:"Mini 3 Pro" },
+        { value:"mini5p",title:"Mini 5 Pro",     desc:"1-inch sensor class, ND kit assumed.", pill:"Mini 5 Pro" },
+        { value:"m4dt",  title:"Matrice 4DT",    desc:"Enterprise platform, multi-camera.", pill:"Matrice" }
+      ],
+      mode: [
+        { value:"video", title:"Video", desc:"Cinematic and motion settings.", pill:"Video" },
+        { value:"photo", title:"Photo", desc:"Still photo and HDR guidance.", pill:"Photo" },
+        { value:"both",  title:"Both",  desc:"One preset for video plus one for photo.", pill:"Both" }
+      ],
+      lighting: [
+        { value:"bright",  title:"Bright sun / snow glare", desc:"Harsh highlights, ND likely.", pill:"Bright" },
+        { value:"mixed",   title:"Sun + clouds (changeable)", desc:"Exposure shifts quickly.", pill:"Mixed" },
+        { value:"overcast",title:"Overcast", desc:"Flatter light, ND lighter.", pill:"Overcast" },
+        { value:"golden",  title:"Golden hour", desc:"Warm light, easier highlights.", pill:"Golden" },
+        { value:"dusk",    title:"Dusk / low light", desc:"Noise creeps in, slow down.", pill:"Dusk" },
+        { value:"night",   title:"Night (street lights etc.)", desc:"Expect limits, keep motion smooth.", pill:"Night" }
+      ],
+      mission: [
+        { value:"cinematic",    title:"Cinematic (slow, smooth)", desc:"Natural motion blur, clean grading.", pill:"Smooth" },
+        { value:"trackingSlow", title:"Tracking (gentle follow)", desc:"Walking pace, soft motion.", pill:"Track" },
+        { value:"trackingFast", title:"Tracking (cars, fast movement)", desc:"Higher fps, keep subject exposed.", pill:"Fast" },
+        { value:"actionCrisp",  title:"Action crisp (short shutter)", desc:"Staccato look, sharp action.", pill:"Crisp" },
+        { value:"landscapePhoto",title:"Landscape / stills", desc:"RAW, ISO discipline, AEB for HDR.", pill:"Stills" },
+        { value:"nightVideo",   title:"Night video", desc:"Stick to 180° rule, slow moves, accept blur.", pill:"Night" }
+      ]
+    };
+
+    // ------------------------------------------------------------
+    // State
+    // ------------------------------------------------------------
+    const state = {
+      step: 1,
+      drone: "",
+      mode: "",
+      lighting: "",
+      mission: "",
+      pal: true,
+      wb: true,
+      flat: true,
+      iso: true
+    };
+
+    // ------------------------------------------------------------
+    // DOM
+    // ------------------------------------------------------------
+    const stepEls = {
+      1: document.getElementById("step1"),
+      2: document.getElementById("step2"),
+      3: document.getElementById("step3"),
+      4: document.getElementById("step4")
+    };
+
+    const droneHint = document.getElementById("droneHint");
+
+    const droneOptions = document.getElementById("droneOptions");
+    const modeOptions = document.getElementById("modeOptions");
+    const lightingOptions = document.getElementById("lightingOptions");
+    const missionOptions = document.getElementById("missionOptions");
+
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const copyBtn = document.getElementById("copyBtn");
+
+    const progressText = document.getElementById("progressText");
+    const barFill = document.getElementById("barFill");
+
+    const resultEl = document.getElementById("result");
+    const chipsEl = document.getElementById("chips");
+    const kvEl = document.getElementById("kv");
+    const notesEl = document.getElementById("notes");
+    const specsEl = document.getElementById("specs");
 
     const palToggle = document.getElementById("palToggle");
     const wbToggle = document.getElementById("wbToggle");
     const flatToggle = document.getElementById("flatToggle");
     const isoToggle = document.getElementById("isoToggle");
 
-    const result = document.getElementById("result");
-    const chips = document.getElementById("chips");
-    const kv = document.getElementById("kv");
-    const notes = document.getElementById("notes");
-    const specs = document.getElementById("specs");
-
-    const resetBtn = document.getElementById("resetBtn");
-    const copyBtn = document.getElementById("copyBtn");
-
     // ------------------------------------------------------------
     // Helpers
     // ------------------------------------------------------------
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
     function roundShutter(target){
-      // Round to common shutter values used on DJI
       const common = [30,40,50,60,80,100,120,160,200,240,250,320,400,500,640,800,1000,1600,2000,3200,4000,8000];
-      // target is denominator (e.g. 50 -> 1/50)
       let best = common[0];
       let bestDiff = Math.abs(common[0] - target);
       for (const v of common){
@@ -518,47 +627,41 @@
       }
       return best;
     }
-
-    function baseFps(){
-      // PAL: 25/50. NTSC: 30/60.
-      return palToggle.checked ? 25 : 30;
-    }
-
     function fmtShutter(den){ return `1/${den}`; }
+    function baseFps(){ return state.pal ? 25 : 30; }
 
-    function chip(text, kind){
-      const div = document.createElement("div");
-      div.className = `chip ${kind || ""}`.trim();
-      div.textContent = text;
-      return div;
+    function el(tag, cls){
+      const x = document.createElement(tag);
+      if (cls) x.className = cls;
+      return x;
     }
-
+    function chip(text, kind){
+      const d = el("div", `chip ${kind || ""}`.trim());
+      d.textContent = text;
+      return d;
+    }
     function line(k, v){
-      const div = document.createElement("div");
-      div.className = "line";
-      div.innerHTML = `<div class="k">${k}</div><div class="v">${v}</div>`;
-      return div;
+      const d = el("div", "line");
+      d.innerHTML = `<div class="k">${k}</div><div class="v">${v}</div>`;
+      return d;
     }
 
     function supportsFlatProfile(droneKey){
       const log = (DRONES[droneKey]?.log || "").toLowerCase();
       return log.includes("d-log") || log.includes("d-cinelike") || log.includes("hlg");
     }
-
     function pickProfile(droneKey){
-      if (!flatToggle.checked) return "Normal";
+      if (!state.flat) return "Normal";
       if (!supportsFlatProfile(droneKey)) return "Normal";
-      // Prefer D-Log M if available, else D-Cinelike, else HLG.
       const log = DRONES[droneKey].log || "";
-      if (log.includes("D-Log M") || log.toLowerCase().includes("d-log m")) return "D-Log M";
+      if (log.toLowerCase().includes("d-log m")) return "D-Log M";
       if (log.toLowerCase().includes("d-cinelike")) return "D-Cinelike";
       if (log.toLowerCase().includes("hlg")) return "HLG";
       return "Normal";
     }
 
     function wbSuggestion(lighting){
-      if (!wbToggle.checked) return "Auto (not recommended for video)";
-      // Rough Kelvin starting points
+      if (!state.wb) return "Auto (not recommended for video)";
       switch(lighting){
         case "bright": return "Lock WB ~5600K (sunny)";
         case "mixed": return "Lock WB ~5600–6000K (pick one and stick to it)";
@@ -571,9 +674,7 @@
     }
 
     function ndSuggestion(lighting, mission, droneKey){
-      // Simple, field-usable ND table. Assumes fixed aperture and 180° shutter in daylight.
-      // If user picks crisp action (short shutter), ND may be reduced.
-      const hasConsumerNDKit = (droneKey === "mini5p");
+      const hasKit = (droneKey === "mini5p");
       const wantsCrisp = (mission === "actionCrisp");
       const wantsNight = (lighting === "night" || lighting === "dusk");
 
@@ -581,105 +682,56 @@
 
       let nd;
       switch(lighting){
-        case "bright":
-          nd = wantsCrisp ? "ND16–ND32" : "ND32–ND64";
-          break;
-        case "mixed":
-          nd = wantsCrisp ? "ND8–ND16" : "ND16–ND32";
-          break;
-        case "overcast":
-          nd = wantsCrisp ? "ND4–ND8" : "ND8–ND16";
-          break;
-        case "golden":
-          nd = wantsCrisp ? "ND4" : "ND4–ND8";
-          break;
-        default:
-          nd = "No ND";
+        case "bright":  nd = wantsCrisp ? "ND16–ND32" : "ND32–ND64"; break;
+        case "mixed":   nd = wantsCrisp ? "ND8–ND16"  : "ND16–ND32"; break;
+        case "overcast":nd = wantsCrisp ? "ND4–ND8"   : "ND8–ND16";  break;
+        case "golden":  nd = wantsCrisp ? "ND4"       : "ND4–ND8";   break;
+        default:        nd = "No ND";
       }
-
-      if (hasConsumerNDKit){
-        return `${nd} (from Fly More ND kit where possible)`;
-      }
-      return `${nd} (if you have one)`;
+      return hasKit ? `${nd} (Fly More ND kit where possible)` : `${nd} (if you have one)`;
     }
 
-    function isoSuggestion(lighting, mission, droneKey){
-      // Conservative ISO guidance; small sensors suffer quickly.
-      // Mini 5 Pro + Mini 3 Pro can tolerate a bit more, still keep it sensible.
-      const biggishSensor = (droneKey === "mini3p" || droneKey === "mini5p");
-      const night = (lighting === "night");
-      const dusk = (lighting === "dusk");
-      const overcast = (lighting === "overcast" || lighting === "mixed");
-      const bright = (lighting === "bright" || lighting === "golden");
-
-      if (bright) return "ISO 100 (cap 200 if Auto)";
-
-      if (overcast){
-        return biggishSensor ? "ISO 100–400" : "ISO 100–200 (try to stay low)";
-      }
-
-      if (dusk){
-        return biggishSensor ? "ISO 400–800 (cap 800)" : "ISO 200–800 (cap 800, accept noise)";
-      }
-
-      if (night){
-        return biggishSensor ? "ISO 800–1600 (cap 1600 if possible)" : "ISO 800+ (expect noise, keep motion slow)";
-      }
-
+    function isoSuggestion(lighting, droneKey){
+      const biggish = (droneKey === "mini3p" || droneKey === "mini5p");
+      if (lighting === "bright" || lighting === "golden") return "ISO 100 (cap 200 if Auto)";
+      if (lighting === "mixed" || lighting === "overcast") return biggish ? "ISO 100–400" : "ISO 100–200 (try to stay low)";
+      if (lighting === "dusk") return biggish ? "ISO 400–800 (cap 800)" : "ISO 200–800 (cap 800, accept noise)";
+      if (lighting === "night") return biggish ? "ISO 800–1600 (cap 1600 if possible)" : "ISO 800+ (expect noise, keep motion slow)";
       return "ISO 100–400";
     }
 
-    function pickFps(mission, droneKey){
+    function pickFps(mission){
       const base = baseFps();
-
-      // Basic intent:
-      // - Cinematic / tracking slow / night: base fps (25 or 30)
-      // - Tracking fast: double base (50 or 60) if likely available
-      // - Crisp action: double base (50/60) or higher if available, but we won’t assume
-      // - Landscape photo: n/a
       if (mission === "landscapePhoto") return null;
-
-      if (mission === "trackingFast" || mission === "actionCrisp"){
-        return base * 2; // 50/60
-      }
-
-      // For Neo 2 etc, base is fine.
+      if (mission === "trackingFast" || mission === "actionCrisp") return base * 2;
       return base;
     }
 
     function shutterForMission(fps, mission){
       if (!fps) return null;
-
-      // 180° shutter by default: 1/(2*fps)
       const cinematicDen = roundShutter(2 * fps);
-
-      // If crisp action, shorten shutter: roughly 1/(4*fps) as a starting point
       if (mission === "actionCrisp"){
         const crispDen = roundShutter(4 * fps);
         return { den: crispDen, rule: "Crisp action (short shutter)" };
       }
-
-      // Night video: keep 180° to preserve light, even accept blur
       if (mission === "nightVideo"){
         return { den: cinematicDen, rule: "Night (stick near 180° for light)" };
       }
-
       return { den: cinematicDen, rule: "180° rule (natural motion blur)" };
     }
 
     function exposureNotes(lighting, mission){
       const arr = [];
-      if (lighting === "bright") arr.push("Watch highlights (snow/sky), use zebras/histogram if you’ve got them.");
-      if (lighting === "mixed") arr.push("Set exposure for the subject, not the brightest cloud, re-check every few minutes.");
-      if (lighting === "night") arr.push("Fly slower than feels natural, avoid fast yaw, it turns into mush quickly.");
-      if (mission === "cinematic") arr.push("Use slow yaw, gentle stick curves, and keep gimbal movement lazy.");
-      if (mission === "trackingFast") arr.push("Prioritise keeping the subject exposed, background can clip if needed.");
-      if (mission === "actionCrisp") arr.push("Short shutter can look ‘staccato’, that’s the point.");
+      if (lighting === "bright") arr.push("Watch highlights (snow/sky), use zebras or histogram if available.");
+      if (lighting === "mixed") arr.push("Set exposure for the subject, not the brightest cloud, re-check often.");
+      if (lighting === "night") arr.push("Fly slower than feels natural, avoid fast yaw, it turns to mush quickly.");
+      if (mission === "cinematic") arr.push("Use slow yaw and gentle stick curves, keep gimbal movement lazy.");
+      if (mission === "trackingFast") arr.push("Prioritise the subject exposure, background can clip if needed.");
+      if (mission === "actionCrisp") arr.push("Short shutter can look staccato, that is the point.");
       return arr;
     }
 
     function photoPreset(lighting, droneKey){
-      // Straightforward photo guidance.
       const raw = DRONES[droneKey]?.photoRaw || "Depends on model";
       const base = [];
       base.push(["Format", raw.includes("RAW") ? "RAW (DNG) if available" : "Highest quality available"]);
@@ -691,169 +743,214 @@
       return base;
     }
 
-    function buildResult(){
-      const droneKey = elDrone.value;
-      const mode = elMode.value;
-      const lighting = elLighting.value;
-      const mission = elMission.value;
+    // ------------------------------------------------------------
+    // Wizard rendering
+    // ------------------------------------------------------------
+    function renderOptions(container, list, selectedValue, onPick){
+      container.innerHTML = "";
+      for (const opt of list){
+        const b = el("button", "optBtn");
+        b.type = "button";
+        b.dataset.value = opt.value;
+        b.innerHTML = `
+          <div class="t">
+            <b>${opt.title}</b>
+            <span>${opt.desc}</span>
+          </div>
+          <div class="pill">${opt.pill || "Pick"}</div>
+        `;
+        if (opt.value === selectedValue) b.classList.add("selected");
+        b.addEventListener("click", () => onPick(opt.value));
+        container.appendChild(b);
+      }
+    }
 
-      if (!droneKey || !mode || !lighting || !mission) {
-        result.style.display = "none";
-        copyBtn.disabled = true;
-        return;
+    function markSelected(container, value){
+      [...container.querySelectorAll(".optBtn")].forEach(btn => {
+        btn.classList.toggle("selected", btn.dataset.value === value);
+      });
+    }
+
+    function canAdvance(step){
+      if (step === 1) return !!state.drone;
+      if (step === 2) return !!state.mode;
+      if (step === 3) return !!state.lighting;
+      if (step === 4) return !!state.mission;
+      return false;
+    }
+
+    function updateProgress(){
+      const total = 4;
+      progressText.textContent = `Step ${state.step} of ${total}`;
+      barFill.style.width = `${Math.round((state.step / total) * 100)}%`;
+
+      for (let i = 1; i <= total; i++){
+        stepEls[i].classList.toggle("active", i === state.step);
       }
 
-      const d = DRONES[droneKey];
-      const profile = pickProfile(droneKey);
+      backBtn.disabled = (state.step === 1);
+      nextBtn.disabled = !canAdvance(state.step);
 
-      // Build chips
-      chips.innerHTML = "";
-      chips.appendChild(chip(d.name, "ok"));
-      chips.appendChild(chip(palToggle.checked ? "PAL 25/50" : "NTSC 30/60", "warn"));
-      chips.appendChild(chip(profile, supportsFlatProfile(droneKey) ? "ok" : "warn"));
-      if (wbToggle.checked) chips.appendChild(chip("WB locked", "ok"));
-      else chips.appendChild(chip("WB auto", "warn"));
+      // Final step: Next becomes "Show results"
+      nextBtn.textContent = (state.step === 4) ? "Show results" : "Next";
+    }
 
-      kv.innerHTML = "";
-      notes.innerHTML = "";
-      specs.textContent = "";
+    function goTo(step){
+      state.step = step;
+      resultEl.style.display = "none";
+      copyBtn.disabled = true;
+      updateProgress();
+      saveState();
+    }
+
+    // ------------------------------------------------------------
+    // Result building
+    // ------------------------------------------------------------
+    function buildResult(){
+      if (!state.drone || !state.mode || !state.lighting || !state.mission) return;
+
+      const d = DRONES[state.drone];
+      const profile = pickProfile(state.drone);
+
+      chipsEl.innerHTML = "";
+      chipsEl.appendChild(chip(d.name, "ok"));
+      chipsEl.appendChild(chip(state.pal ? "PAL 25/50" : "NTSC 30/60", "warn"));
+      chipsEl.appendChild(chip(profile, supportsFlatProfile(state.drone) ? "ok" : "warn"));
+      chipsEl.appendChild(chip(state.wb ? "WB locked" : "WB auto", state.wb ? "ok" : "warn"));
+
+      kvEl.innerHTML = "";
+      notesEl.innerHTML = "";
+      specsEl.textContent = "";
 
       const noteLines = [];
 
-      // VIDEO preset
-      if (mode === "video" || mode === "both"){
-        const fps = pickFps(mission, droneKey);
-        const shutter = shutterForMission(fps, mission);
-        const iso = isoSuggestion(lighting, mission, droneKey);
-        const nd = ndSuggestion(lighting, mission, droneKey);
-        const wb = wbSuggestion(lighting);
+      if (state.mode === "video" || state.mode === "both"){
+        const fps = pickFps(state.mission);
+        const sh = shutterForMission(fps, state.mission);
+        const iso = isoSuggestion(state.lighting, state.drone);
+        const nd = ndSuggestion(state.lighting, state.mission, state.drone);
+        const wb = wbSuggestion(state.lighting);
 
-        kv.appendChild(line("Video profile", profile));
-        kv.appendChild(line("Frame rate", fps ? `${fps} fps` : "n/a"));
-        kv.appendChild(line("Shutter speed", shutter ? `${fmtShutter(shutter.den)} (${shutter.rule})` : "n/a"));
-        kv.appendChild(line("ISO target", iso));
-        kv.appendChild(line("ND filter", nd));
-        kv.appendChild(line("White balance", wb));
+        kvEl.appendChild(line("Video profile", profile));
+        kvEl.appendChild(line("Frame rate", fps ? `${fps} fps` : "n/a"));
+        kvEl.appendChild(line("Shutter speed", sh ? `${fmtShutter(sh.den)} (${sh.rule})` : "n/a"));
+        kvEl.appendChild(line("ISO target", iso));
+        kvEl.appendChild(line("ND filter", nd));
+        kvEl.appendChild(line("White balance", wb));
 
-        if (isoToggle.checked){
-          noteLines.push("Low ISO priority: if exposure is off, fix it with ND and shutter (within reason) before you start cranking ISO.");
+        if (state.iso){
+          noteLines.push("Low ISO priority: fix exposure with ND and shutter (within reason) before cranking ISO.");
         }
       }
 
-      // PHOTO preset
-      if (mode === "photo" || mode === "both"){
-        const photo = photoPreset(lighting, droneKey);
+      if (state.mode === "photo" || state.mode === "both"){
+        const photo = photoPreset(state.lighting, state.drone);
         for (const [k,v] of photo){
-          kv.appendChild(line(`Photo: ${k}`, v));
+          kvEl.appendChild(line(`Photo: ${k}`, v));
         }
       }
 
-      // Common notes
-      const exp = exposureNotes(lighting, mission);
-      for (const n of exp) noteLines.push(n);
-
-      // Drone-specific notes
+      const exp = exposureNotes(state.lighting, state.mission);
+      exp.forEach(x => noteLines.push(x));
       if (d.notes) noteLines.push(d.notes);
 
-      // Add a couple of consistent “field rules”
-      noteLines.push("If you’re grading later, expose to protect highlights, you can lift shadows more safely than clipped sky.");
-      noteLines.push("Do a 3-second test clip, check it, then commit. Saves you flying home with regret.");
+      noteLines.push("If you’re grading later, protect highlights, you can lift shadows more safely than clipped sky.");
+      noteLines.push("Do a 3-second test clip, check it, then commit.");
 
-      notes.innerHTML = "<ul style='margin:8px 0 0; padding-left: 18px;'>" +
+      notesEl.innerHTML = "<ul style='margin:8px 0 0; padding-left: 18px;'>" +
         noteLines.map(x => `<li>${x}</li>`).join("") +
         "</ul>";
 
-      specs.textContent =
+      specsEl.textContent =
         `Camera notes: ${d.sensor} • ${d.aperture} • Max video: ${d.maxVideo} • Flat profile: ${d.log} • ND: ${d.nd}`;
 
-      result.style.display = "block";
+      resultEl.style.display = "block";
       copyBtn.disabled = false;
 
-      // Save state for next time (handy in the field)
-      const state = {
-        droneKey, mode, lighting, mission,
-        pal: palToggle.checked, wb: wbToggle.checked,
-        flat: flatToggle.checked, iso: isoToggle.checked
+      // Scroll to result on mobile
+      resultEl.scrollIntoView({ behaviour: "smooth", block: "start" });
+    }
+
+    // ------------------------------------------------------------
+    // Persistence
+    // ------------------------------------------------------------
+    function saveState(){
+      const s = {
+        step: state.step,
+        drone: state.drone,
+        mode: state.mode,
+        lighting: state.lighting,
+        mission: state.mission,
+        pal: state.pal,
+        wb: state.wb,
+        flat: state.flat,
+        iso: state.iso
       };
-      try{ localStorage.setItem("fieldToolState", JSON.stringify(state)); }catch(e){}
-    }
-
-    function setEnabled(){
-      elMode.disabled = !elDrone.value;
-      elLighting.disabled = !elMode.value;
-      elMission.disabled = !elLighting.value;
-
-      if (!elDrone.value){
-        elDroneHint.textContent = "";
-      } else {
-        const d = DRONES[elDrone.value];
-        elDroneHint.textContent = `${d.sensor}, ${d.aperture}.`;
-      }
-    }
-
-    function resetAll(){
-      elDrone.value = "";
-      elMode.value = "";
-      elLighting.value = "";
-      elMission.value = "";
-      palToggle.checked = true;
-      wbToggle.checked = true;
-      flatToggle.checked = true;
-      isoToggle.checked = true;
-
-      setEnabled();
-      buildResult();
-
-      try{ localStorage.removeItem("fieldToolState"); }catch(e){}
+      try{ localStorage.setItem("fieldToolWizardState", JSON.stringify(s)); }catch(e){}
     }
 
     function loadState(){
       try{
-        const raw = localStorage.getItem("fieldToolState");
+        const raw = localStorage.getItem("fieldToolWizardState");
         if (!raw) return;
         const s = JSON.parse(raw);
-        if (s.droneKey) elDrone.value = s.droneKey;
-        setEnabled();
-        if (s.mode) elMode.value = s.mode;
-        setEnabled();
-        if (s.lighting) elLighting.value = s.lighting;
-        setEnabled();
-        if (s.mission) elMission.value = s.mission;
-
-        if (typeof s.pal === "boolean") palToggle.checked = s.pal;
-        if (typeof s.wb === "boolean") wbToggle.checked = s.wb;
-        if (typeof s.flat === "boolean") flatToggle.checked = s.flat;
-        if (typeof s.iso === "boolean") isoToggle.checked = s.iso;
-
-        buildResult();
+        if (s && typeof s === "object"){
+          state.step = s.step || 1;
+          state.drone = s.drone || "";
+          state.mode = s.mode || "";
+          state.lighting = s.lighting || "";
+          state.mission = s.mission || "";
+          state.pal = (typeof s.pal === "boolean") ? s.pal : true;
+          state.wb = (typeof s.wb === "boolean") ? s.wb : true;
+          state.flat = (typeof s.flat === "boolean") ? s.flat : true;
+          state.iso = (typeof s.iso === "boolean") ? s.iso : true;
+        }
       }catch(e){}
     }
 
+    function resetAll(){
+      state.step = 1;
+      state.drone = "";
+      state.mode = "";
+      state.lighting = "";
+      state.mission = "";
+      state.pal = true;
+      state.wb = true;
+      state.flat = true;
+      state.iso = true;
+
+      try{ localStorage.removeItem("fieldToolWizardState"); }catch(e){}
+
+      // Re-render selections
+      renderAll();
+      goTo(1);
+    }
+
+    // ------------------------------------------------------------
+    // Copy
+    // ------------------------------------------------------------
     function copyResult(){
-      const droneKey = elDrone.value;
-      const mode = elMode.value;
-      const lighting = elLighting.value;
-      const mission = elMission.value;
-      const d = DRONES[droneKey];
-      const profile = pickProfile(droneKey);
+      const d = DRONES[state.drone];
+      const profile = pickProfile(state.drone);
 
       const parts = [];
       parts.push(`Drone: ${d.name}`);
-      parts.push(`Output: ${mode}`);
-      parts.push(`Lighting: ${elLighting.options[elLighting.selectedIndex].text}`);
-      parts.push(`Mission: ${elMission.options[elMission.selectedIndex].text}`);
-      parts.push(`System: ${palToggle.checked ? "PAL (25/50)" : "NTSC (30/60)"}`);
+      parts.push(`Output: ${state.mode}`);
+      parts.push(`Lighting: ${OPTIONS.lighting.find(x => x.value === state.lighting)?.title || state.lighting}`);
+      parts.push(`Mission: ${OPTIONS.mission.find(x => x.value === state.mission)?.title || state.mission}`);
+      parts.push(`System: ${state.pal ? "PAL (25/50)" : "NTSC (30/60)"}`);
       parts.push(`Profile: ${profile}`);
-      parts.push(`WB: ${wbSuggestion(lighting)}`);
-      if (mode === "video" || mode === "both"){
-        const fps = pickFps(mission, droneKey);
-        const sh = shutterForMission(fps, mission);
+      parts.push(`WB: ${wbSuggestion(state.lighting)}`);
+
+      if (state.mode === "video" || state.mode === "both"){
+        const fps = pickFps(state.mission);
+        const sh = shutterForMission(fps, state.mission);
         parts.push(`FPS: ${fps} fps`);
         parts.push(`Shutter: ${fmtShutter(sh.den)} (${sh.rule})`);
-        parts.push(`ISO: ${isoSuggestion(lighting, mission, droneKey)}`);
-        parts.push(`ND: ${ndSuggestion(lighting, mission, droneKey)}`);
+        parts.push(`ISO: ${isoSuggestion(state.lighting, state.drone)}`);
+        parts.push(`ND: ${ndSuggestion(state.lighting, state.mission, state.drone)}`);
       }
-      if (mode === "photo" || mode === "both"){
+      if (state.mode === "photo" || state.mode === "both"){
         parts.push(`Photo: ISO 100, RAW if available, AEB for HDR scenes`);
       }
 
@@ -862,46 +959,127 @@
         copyBtn.textContent = "Copied";
         setTimeout(() => copyBtn.textContent = "Copy result", 900);
       }).catch(() => {
-        alert("Couldn’t copy (browser blocked). You can long-press and select text in the result area instead.");
+        alert("Couldn’t copy (browser blocked). You can select and copy from the results instead.");
       });
+    }
+
+    // ------------------------------------------------------------
+    // Render all option steps
+    // ------------------------------------------------------------
+    function renderAll(){
+      // Step 1
+      renderOptions(droneOptions, OPTIONS.drone, state.drone, (val) => {
+        state.drone = val;
+        markSelected(droneOptions, val);
+
+        const d = DRONES[val];
+        droneHint.textContent = `Selected: ${d.name}. Camera: ${d.sensor}, ${d.aperture}.`;
+
+        // Clear downstream if changing upstream choice
+        state.mode = "";
+        state.lighting = "";
+        state.mission = "";
+        renderAll();
+
+        nextBtn.disabled = false;
+        saveState();
+      });
+
+      // Step 2
+      renderOptions(modeOptions, OPTIONS.mode, state.mode, (val) => {
+        state.mode = val;
+        markSelected(modeOptions, val);
+
+        // If they pick photo only, mission "landscapePhoto" makes more sense, but we will not force it.
+        state.lighting = "";
+        state.mission = "";
+        renderAll();
+
+        nextBtn.disabled = false;
+        saveState();
+      });
+
+      // Step 3
+      renderOptions(lightingOptions, OPTIONS.lighting, state.lighting, (val) => {
+        state.lighting = val;
+        markSelected(lightingOptions, val);
+
+        state.mission = "";
+        renderAll();
+
+        nextBtn.disabled = false;
+        saveState();
+      });
+
+      // Step 4
+      renderOptions(missionOptions, OPTIONS.mission, state.mission, (val) => {
+        state.mission = val;
+        markSelected(missionOptions, val);
+
+        nextBtn.disabled = false;
+        saveState();
+      });
+
+      // Toggles
+      palToggle.checked = state.pal;
+      wbToggle.checked = state.wb;
+      flatToggle.checked = state.flat;
+      isoToggle.checked = state.iso;
     }
 
     // ------------------------------------------------------------
     // Events
     // ------------------------------------------------------------
-    elDrone.addEventListener("change", () => {
-      setEnabled();
-      // Clear downstream selections for sanity
-      elMode.value = "";
-      elLighting.value = "";
-      elMission.value = "";
-      setEnabled();
-      buildResult();
+    backBtn.addEventListener("click", () => {
+      if (state.step > 1) goTo(state.step - 1);
     });
 
-    elMode.addEventListener("change", () => {
-      elLighting.value = "";
-      elMission.value = "";
-      setEnabled();
+    nextBtn.addEventListener("click", () => {
+      if (!canAdvance(state.step)) return;
+
+      if (state.step < 4){
+        goTo(state.step + 1);
+        return;
+      }
+
+      // Final step: show results
       buildResult();
+      saveState();
     });
-
-    elLighting.addEventListener("change", () => {
-      elMission.value = "";
-      setEnabled();
-      buildResult();
-    });
-
-    elMission.addEventListener("change", buildResult);
-
-    [palToggle, wbToggle, flatToggle, isoToggle].forEach(t => t.addEventListener("change", buildResult));
 
     resetBtn.addEventListener("click", resetAll);
     copyBtn.addEventListener("click", copyResult);
 
-    // Initial enable state + load saved state
-    setEnabled();
+    palToggle.addEventListener("change", () => { state.pal = palToggle.checked; saveState(); if (resultEl.style.display === "block") buildResult(); });
+    wbToggle.addEventListener("change", () => { state.wb = wbToggle.checked; saveState(); if (resultEl.style.display === "block") buildResult(); });
+    flatToggle.addEventListener("change", () => { state.flat = flatToggle.checked; saveState(); if (resultEl.style.display === "block") buildResult(); });
+    isoToggle.addEventListener("change", () => { state.iso = isoToggle.checked; saveState(); if (resultEl.style.display === "block") buildResult(); });
+
+    // ------------------------------------------------------------
+    // Init
+    // ------------------------------------------------------------
     loadState();
+    renderAll();
+
+    // If we loaded with partial state, land them on the earliest incomplete step
+    function firstIncompleteStep(){
+      if (!state.drone) return 1;
+      if (!state.mode) return 2;
+      if (!state.lighting) return 3;
+      if (!state.mission) return 4;
+      return 4;
+    }
+
+    const targetStep = firstIncompleteStep();
+    goTo(targetStep);
+
+    // If everything is already filled, show results immediately
+    if (state.drone && state.mode && state.lighting && state.mission){
+      buildResult();
+    }
+
+    // Update button enabled state based on current step
+    updateProgress();
   </script>
 </body>
 </html>
